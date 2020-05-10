@@ -1,0 +1,86 @@
+﻿@model IEnumerable<final_pro.Models.Postbook>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a><br />
+    @using (@Html.BeginForm("Index", "Postbooks", FormMethod.Get))
+    {
+        <b>Search By:</b>
+    <br/>
+        @Html.RadioButton("searchBy", "title", true) <text>Title</text>
+        @Html.RadioButton("searchBy", "author", true) <text>Author</text>
+        
+
+        <br />
+
+        @Html.TextBox("search")
+        <input type="submit" value="search" />
+    }
+</p>
+
+@if (Model.Count() == 0)
+{
+    <tr>
+        <td colspan="4">
+            No records match search criteria
+        </td>
+    </tr>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.title)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.author)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ISBN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.year)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.author)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ISBN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.year)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.title">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.title">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.title">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
